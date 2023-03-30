@@ -1,0 +1,77 @@
+// Use DBML to define your database structure
+// Docs: https://www.dbml.org/docs
+
+Table schools {
+  id integer [primary key]
+  school_name varchar
+  created_at timestamp
+  classes classesData
+}
+
+Table classes {
+  id integer
+  school_id integer
+  name varchar
+  class_teacher_id integer
+}
+
+Table subjects {
+  id integer
+  class_id integer
+  name varchar
+}
+
+
+Table students {
+  id integer [ primary key ]
+  school_id integer [note: 'Content of the post']
+  parent_id integer
+  first_name varchar
+  date_of_birth date
+}
+
+Table parents {
+  id integer [ primary key ]
+  name varchar
+  mobile_number integer
+}
+
+Table attendance {
+  student_id integer
+  date date
+  present boolean
+}
+
+Table homework {
+  school_id integer
+  date date
+  description text   
+}
+
+Table teachers {
+  id integer [primary key]
+  name varchar
+  date_of_birth date
+  qualification varchar
+}
+
+table exams {
+  id integer [primary key]
+  school_id integer
+  date date  
+}
+
+
+Ref: schools.id < students.school_id
+
+Ref: schools.id < teachers.id
+
+Ref: subjects.id < homework.school_id
+
+Ref: schools.id < classes.school_id
+
+Ref: classes.id < subjects.class_id
+
+Ref: students.id < attendance.student_id
+
+Ref: students.parent_id > parents.id
